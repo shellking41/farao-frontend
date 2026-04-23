@@ -12,7 +12,7 @@ import BotView from '../components/Room/BotView.jsx';
 import { GameSessionContext } from '../Contexts/GameSessionContext.jsx';
 import SomethingWentWrong from '../service/somethingWentWrong.jsx';
 import styles from './styles/RoomPage.module.css';
-import UserReactions from '../components/UserReactions.jsx';
+import UserReactions from '../components/userReactions.jsx';
 import FinalPositionsBlock from '../components/Room/FinalPositionsBlock.jsx';
 
 function RoomPage() {
