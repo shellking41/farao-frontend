@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import useWebsocket from '../hooks/useWebsocket.js';
 import { RoomsDataContext } from '../Contexts/RoomsDataContext.jsx';
 import styles from './styles/JoinRequestCardStyle.module.css';
-import UserReactions from './userReactions.jsx';
+import UserReactions from './UserReactions.jsx';
 import { UserContext } from '../Contexts/UserContext.jsx';
 
 function JoinRequestCard({ userId, roomId, username, message, dislikeCount, likeCount }) {
