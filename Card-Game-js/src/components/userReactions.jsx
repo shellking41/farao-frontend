@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useApiCallHook } from '../hooks/useApiCallHook';
 import { useContext } from 'react';
 import { TokenContext } from '../Contexts/TokenContext';
-import styles from './styles/UserReactions.module.css';
+import styles from './styles/userReactions.module.css';
 import { UserContext } from '../Contexts/UserContext.jsx';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 
