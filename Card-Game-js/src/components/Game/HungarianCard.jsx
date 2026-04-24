@@ -21,23 +21,22 @@ export function getPlayerPositionBySeat(playerSeat, selfSeat, totalPlayers) {
   // Relatív seat különbség kiszámítása
   let relativeSeat = (playerSeat - selfSeat + totalPlayers) % totalPlayers;
 
-  // Ha negatív lenne, korrigáljuk
   if (relativeSeat < 0) {
     relativeSeat += totalPlayers;
   }
 
   // 2 játékos esetén
   if (totalPlayers === 2) {
-    // 0: bottom (self)
-    // 1: top (opponent)
+    //  bottom self
+    // top opponent
     return relativeSeat === 1 ? 'top' : 'bottom';
   }
 
   // 3 játékos esetén
   if (totalPlayers === 3) {
-    // 0: bottom (self)
-    // 1: left (első ellenfél - óramutató járásával következő)
-    // 2: right (második ellenfél)
+    // bottom self
+    // left első ellenfél
+    // right második ellenfél
     switch (relativeSeat) {
       case 0:
         return 'bottom';
@@ -52,10 +51,10 @@ export function getPlayerPositionBySeat(playerSeat, selfSeat, totalPlayers) {
 
   // 4 játékos esetén
   if (totalPlayers === 4) {
-    // 0: bottom (self)
-    // 1: left (első ellenfél - óramutató járásával következő)
-    // 2: top (szemben ülő)
-    // 3: right (harmadik ellenfél)
+    // bottom self
+    //  left első ellenfél
+    //  top szemben ülő
+    //  right harmadik ellenfé
     switch (relativeSeat) {
       case 0:
         return 'bottom';
@@ -75,11 +74,11 @@ export function getPlayerPositionBySeat(playerSeat, selfSeat, totalPlayers) {
 
 export function getCardStyleForPosition(pos, cardIndex, cardsCount) {
 
-  const arcDepth = 20;      // mennyire "domborodik" a kéz
-  const depthBoost = 7;    // mennyire legyen túlzó
-  // Arc configuration
-  const arcRadius = 1100 - (cardsCount * 30); // Radius of the arc circle
-  const maxArcAngle = 30; // Maximum angle spread in degrees for the entire hand
+  const arcDepth = 20;      // mennyire domborodik a kéz
+  const depthBoost = 7;
+
+  const arcRadius = 1100 - (cardsCount * 30);
+  const maxArcAngle = 30;
 
   switch (pos) {
     case 'bottom': {
@@ -172,7 +171,7 @@ export function getCardStyleForPosition(pos, cardIndex, cardsCount) {
   }
 }
 
-// Segédfüggvény a kártya kép elérési útjának generálásához
+// kártya kép elérési útjának generálása
 function getCardImagePath(suit, rank) {
   if (suit && rank) {
     const suitLower = suit.toLowerCase();
@@ -270,10 +269,9 @@ const HungarianCardInner = ({
     transformStyle: 'preserve-3d',
     backfaceVisibility: 'hidden',
   };
-  // Kártya képpel
   const imagePath = getCardImagePath(cardData?.suit, cardData?.rank);
 
-  // Hátlap (amikor nincs cardData)
+  // Hátlap amikor nincs cardData
   if (!cardData?.suit && !cardData?.rank) {
     return (
       <div
@@ -343,7 +341,6 @@ const HungarianCardInner = ({
         onError={(e) => {
           console.error(`Failed to load card image: ${imagePath}`);
           e.target.style.display = 'none';
-          // ha a kép nem tölt be akkor a szülő elembe írunk fallback tartalmat
           const parent = e.target.parentElement;
           if (parent) {
             parent.style.backgroundColor = '#333';
@@ -379,6 +376,5 @@ const HungarianCardInner = ({
   );
 };
 
-// wrap forwardRef with memo for performance
 const HungarianCard = memo(forwardRef(HungarianCardInner));
 export default HungarianCard;

@@ -53,69 +53,6 @@ import useBroadcastPlayAction
   from '../components/Game/Hooks/useBroadcastPlayAction.js';
 import { FaPlay, FaStepForward } from 'react-icons/fa';
 
-// van egy hiba a selectcardsd nak hogy ha kivalasztok egy kartyat, de nem teszem lÃƒÂ´e hanem huzok egy kartyat helyette akkor nem engedne maskartyatr letenni csak azt amit kivalasztottam az elozo korbe- kÃƒâ€°sz
-// valamiert a viewportol fugg hogy hova teszik le a kartyat a opponensek-kesz
-// ha mobil nÃƒâ€°zet van akkor legyen egy jobbrra balra gÃƒÂ¶rgethetÃ…â€˜ mezÃ…â€˜ amiben benne vannak a kartyak, fixen-kesz
-// ha negy kartyat teszek le en akkor nem meg vegig az animacio-kesz
-//tudok huzni kartyat mikozben a enemie kartya huzas animacioja van es az beszakitja az animaciot-kesz
-// valmiert a reshuffle animacio beragad ha uj gamet inditunk-kesz
-//jelenleg rossz helyre mennek a huzott kartyak opponens es selfplayernek is-kesz
-// ha ujra enkovetkezek akkor nem tudok lepni (amikor streakelek)-kesz
-//amikor jon az uj kor akkor frissditeni kell azt a statet hogy ki fog jonni-kesz
-//megoldani azt hogy ne akkor induljon el az animacio amikor rakantintunk aplaycard ra, vagy azzal abroadcastal lehetne elkuldeni azt hogy rakantintottunk a aplayre es ug yreagal ra a maik kliens hogy megnyomja agombot
-//megkell nezni hogy ha tobb tabba megvan nyitva  a oldal akkor miert nem jelenik meg a animacio a masik oldlaon
-// todo: most jelenleg ug ymukodik a masik devicen kirugas hogy a token ervénytelenitve van a régi sessionnök nek de nem csinalj ameg rogton a error jelentes csak akkor amikor kuldeni akarunk uzenetet, nem dobje le a a websocketrol rogton ha nincs tokenje, valahogy kikell dobni azt a clienst a websocketbol ami nek mar nincs ervenyes tokenje
-//todo: amikor a mar kidobott masik cliens ha ramegy a leavgamerte akkor rogton a loginba tobja, ha mondjuk huzni akar kartyat akkor ferlajanje hogy refreshelje azh oldalt
-//egyet villan a kép amikor leteszunk tobb mint egy kartyat-kesz
-
-//todo:Ezzel kell kezdeni valamit mert ezt ki kell kommentelni ha azt akarom hogy a masiktaba a usernek ne megyen elvéve a tokenja
-//revokeAllUserTokensExcept(user, refreshToken);
-
-//amikor tobb kartyat huz fel az ellenfel akkor ugranak egyet az animacio utan a kartyai-kesz
-//kell egy szamlalot kitenni hogy most milyen sorrendben fognak kimenni a kivvalasztott kartyak-kesz
-//a refresh notification, csak afooldal, room es a game oldalon jelenjen meg-kezs
-//ha skippel valaki akkor kell jelezni azt valamilyen szinnel a nameboxban-kesz
-//valamiert nem fut le a opponens kartya letetelenek az animacioja--kesz
-//ha uj kor van akkor kesleltetve frissuljelen a playerhandek
-//ha telefon nezet van akkor legyenek kissebbek a kartyak-kesz
-//a mobil nezetbe is kell kartya letetel es draw animacio, ha levan csukva a taska akkor menjen a huzott kartya a nyilfele es kicsinyitodjon le
-//kell a last card shuffle animaciojat megcsinalni,-kesz
-//a blokkolas animaciot meg kell csinaln-kezs
-//a szinvaltas animaciot megkell csinalni
-//valamiert nem tudok huizni kartyat neha amikor mobilnezetbe vagyok
-//blokolast es azt hogy kivan koron animaciot ugy meglehetne csinalni hogy lesznek szoveg buborekok  a card handek felett es azokba  aplayerek nevei bennelesznek, majd arra kell egy "X" es egy mas szinnel mejeloles animacio
-//ha nem mi vagyunk a soron akkor addig csukodjon le a taska, majd vissza-kesz
-//a self kartyak letÃƒÂ´telÃƒÂ´nek az animacÃƒÂ­oit megcsinalni,-kesz
-// tobb kartya letel eltorott-kesz
-// amikor letesszuk a akartyat akkor mar elotte mar latszodik a plaed cardnal hogy mar oda tettuk-kesz
-//kell info a frontednek arrol hogy uj kÃƒÂ¶r kÃƒÂ¶vetkezik-kesz
-//todo:meg kell irni hogy h alehet akkor a easy bot ne streakeljen
-//todo: kell az easy botto jobban lehulyiteni->pl olyan szinre valtson amibol a legkevesebb van
-//todo: hard boto okositani
-//valmiert ha 3 aszt teszek le es ketten jatszunk akkor nem en jovok ujra hanem az ellenfel-kesz
-//todo: az easybot olyan szinre valtson amibol a legkevessebb van neki,
-//todo:VAN OLYAN BAJ HA LETESZEM AZ UTOLSÓ KARTYAT ÉS UGYAN AZT A KARTYAT KAPOM VISSZA AKKOR FRONTENDEN NEM JELENIK MEG
-//kikell javiatni azt hogy ne attol fuggjon a ujkor kezdetekor hogy kikezd hogy kijott volna z aelozoben ,mert ha leteszek egy ÃƒÂ¡szt utolso kartyakaent akjkor valtozik a sorrend
-//todo: ha nincs userPlayer jatekban csak botok akkor a botok valtozzanak at ideiglenesen hardbotta hogy  ne tartjos sokaig a jatek
-//kezelni kell frontenden az uj kort-kesz
-//kell frissiten a decksizet rogton a uj kor-kesz
-// a sajat kartya letÃƒâ€°tel animaciot szebbre kell csinalni-kesz
-//ha egy ellenfel leteszi a utolso kartyat akkor a kovetkezo korbe nem frissul a init played card-kesz
-//a kartyahuzas animaciot megcsinalni-kesz
-//amikor leteszi az ellenfel a kartyat akkor legyen kis kartya megfordulas animacio-kesz
-//a kartya letetel animacio nem onnan indul aahonnan kellene-kesz
-//legyen jelzes hogy ki van soron, valami highlitinggal-kesz
-// legyen a paklinak helye ahonnan felhuzzak a kartyakat-kesz
-//ha leavelunk akkor a playernek refreshelnie kell ahhoz hogy lÃƒÂ¡ssa hogy tenyleg kilÃƒÂ©pett, gondolom nincs reshetelve a state-kesz
-//todo:ha a vÃƒÂ©ge a jateknak akkor az animacio elosszor menjen vÃƒÂ©gbe,
-//todo: kell jelzés a szoba listába hogy nincs egy adott szobának kódja hogy szabadon csatlakozható
-//todo: a szoba paginaciot meg kell csinalni
-//todo: ha vége a kornek akkor ne spawnoljon a jatekosoknak a kezebe akartya hanem legyen kiosztas animacio
-//todo: lehetne globalis chat
-//todo: lehetne szoba chat
-//todo: lehetne barát rendszer
-//todo: lehetne statisztika
-//todo: lehetne like rendszer hogy ha valaki likeol valaki mast vagy dislikol akkor látható lesz  az annak a profilján es feltuntessuk a csatlakozas keresekor, a szobában, is hogy tudjuk elore hogy most toxik vagy rendes jatekos ellen fogunk jatszani
 function Game() {
   const {
     gameSession, playerSelf, turn, setTurn, setPlayerSelf, setGameSession, selectedCards, setSelectedCards, validPlays, animatingDrawCards, setAnimatingDrawCards, animatingReshuffle,
@@ -176,7 +113,6 @@ function Game() {
   }, [currentRoundKey]);
 
   useEffect(() => {
-    // Reset initial load flag after first render
     if (isInitialLoad) {
       setIsInitialLoad(false);
       return;
@@ -190,20 +126,17 @@ function Game() {
 
     const currentLossCount = gameSession.gameData.lossCount[playerSelf.playerId] || 0;
 
-    // Kezdeti betöltéskor csak beállítjuk az értéket, de nem triggereljük a növekedést
     if (isInitialLoad) {
       setPlayerLosses(currentLossCount);
       return;
     }
 
-    // Csak akkor jelzünk növekedést, ha nem kezdeti betöltés és tényleg nőtt
     if (currentLossCount > playerLosses) {
       console.log(`[LOSS INCREASE] Player ${playerSelf.playerId} losses increased from ${playerLosses} to ${currentLossCount}`);
       setLossIncreased(true);
 
     }
 
-    // Mindig frissítjük a playerLosses state-et
     setPlayerLosses(currentLossCount);
   }, [gameSession?.gameData?.lossCount, playerSelf?.playerId, isInitialLoad]);
 
@@ -251,7 +184,6 @@ function Game() {
   //  figyeli a broadcastot
   useEffect(() => {
     const cleanup = onPlayAction((data) => {
-      // akkor fut le ha ugyan arról a playerrol lenne szó
       if (data.playerId === playerSelf?.playerId) {
 
         let cardRefs = draggableHandRef.current?.getCardRefs();
@@ -430,17 +362,14 @@ function Game() {
     const noMoreCardsNextDraw = gameSession?.gameData?.noMoreCardsNextDraw;
     const currentRound = gameSession?.gameData?.currentRound;
 
-    // Új key generálás ha új kör van vagy deck állapot változik
     const newKey = `deck-last-card-${currentRound || 0}`;
 
-    // Ha változott a kulcs vagy a feltételek, reseteljük
     if (lastDeckKeyRef.current !== newKey || (deckSize === 0 && !noMoreCardsNextDraw)) {
       lastDeckKeyRef.current = newKey;
       setLastDeckCardAnimated(false);
     }
   }, [gameSession?.deckSize, animatingDrawCards.length, gameSession?.gameData?.noMoreCardsNextDraw, gameSession?.gameData?.currentRound]);
 
-  // Callback az animáció befejezéséhez
   const handleLastDeckCardAnimationComplete = useCallback(() => {
     setLastDeckCardAnimated(true);
   }, []);
@@ -560,7 +489,6 @@ function Game() {
                       const style = getCardStyleForPosition(pos, cardIndex, count);
                       const refKey = `${p.playerId}-${cardIndex}`;
 
-                      //  Egyedi kulcs round-dal
                       const stableKey = `opponent-round-${currentRoundKey}-${p.playerId}-card-${cardIndex}`;
 
                       return (
@@ -654,7 +582,6 @@ function Game() {
                 const noMoreCardsNextDraw = gameSession?.gameData?.noMoreCardsNextDraw;
                 const currentRound = gameSession?.gameData?.currentRound || 0;
 
-                // Ha van normal deck
                 if (deckSize > 0) {
 
                   console.log(deckRotations);
@@ -670,7 +597,6 @@ function Game() {
                   ));
                 }
 
-                // Ha nincs deck de kellene lennie egy utolsó kártyának (noMoreCardsNextDraw === false)
                 if (!noMoreCardsNextDraw && animatingDrawCards.length === 0) {
                   return (
                     <div
@@ -686,7 +612,6 @@ function Game() {
                   );
                 }
 
-                // Ha tényleg nincs több kártya
                 return null;
               })()}
             </div>

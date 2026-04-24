@@ -61,16 +61,13 @@ export const useApiCallHook = () => {
         },
       });
 
-      // 401 Unauthorized - Token refresh
       if (response.status === 401 && retryCount === 0) {
         console.log('[API] 401 detected, refreshing token...');
         const newToken = await refreshTokenCall();
 
         if (newToken) {
-          // Retry with new token
           return await get(url, newToken, retryCount + 1);
         } else {
-          // Redirect to login if refresh fails
           setErrorLog(prev => ({
             ...prev,
             error: true,
@@ -115,13 +112,11 @@ export const useApiCallHook = () => {
         body: JSON.stringify(data),
       });
 
-      // 401 Unauthorized - Token refresh
       if (response.status === 401 && retryCount === 0) {
         console.log('[API] 401 detected, refreshing token...');
         const newToken = await refreshTokenCall();
 
         if (newToken) {
-          // Retry with new token
           return await post(url, data, newToken, retryCount + 1);
         } else {
 
@@ -168,13 +163,11 @@ export const useApiCallHook = () => {
         body: JSON.stringify(data),
       });
 
-      // 401 Unauthorized - Token refresh
       if (response.status === 401 && retryCount === 0) {
         console.log('[API] 401 detected, refreshing token...');
         const newToken = await refreshTokenCall();
 
         if (newToken) {
-          // Retry with new token
           return await put(url, data, newToken, retryCount + 1);
         } else {
 

@@ -13,7 +13,7 @@ function UserReactions({ userId, like: initialLike, dislike: initialDislike }) {
 
   const [likeCount, setLikeCount] = useState(initialLike);
   const [dislikeCount, setDislikeCount] = useState(initialDislike);
-  const [currentReaction, setCurrentReaction] = useState(null); // 'LIKE', 'DISLIKE', or null
+  const [currentReaction, setCurrentReaction] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -38,12 +38,11 @@ function UserReactions({ userId, like: initialLike, dislike: initialDislike }) {
       );
 
       if (response) {
-        // Update the counts from the server response
+
         setLikeCount(response.likeCount);
         setDislikeCount(response.dislikeCount);
         setCurrentReaction(response.currentReaction);
 
-        // Log the action for debugging
         console.log(`Reaction ${response.action}: ${reaction} on user ${userId}`);
       }
     } catch (error) {

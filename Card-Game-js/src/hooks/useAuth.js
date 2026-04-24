@@ -26,7 +26,7 @@ export const useAuth = () => {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const now = Date.now() / 1000;
-      return payload.exp - now < 300; // 5 percen belül lejár
+      return payload.exp - now < 300;
     } catch {
       return true;
     }
@@ -46,7 +46,7 @@ export const useAuth = () => {
       if (response?.accessToken) {
         setToken(response.accessToken);
 
-        // Broadcast más tabok felé - MOST MÁR A TOKENNEL
+        // Broadcast más tabok felé
         broadcastTokenRefresh(response.accessToken);
 
         return response.accessToken;
@@ -61,7 +61,6 @@ export const useAuth = () => {
     }
   }, [post, isRefreshing, setToken, broadcastTokenRefresh]);
 
-  // User status lekérdezése
   const getCurrentStatus = useCallback(async (token = token) => {
     console.log('[AUTH] Getting current status...');
 
@@ -132,7 +131,7 @@ export const useAuth = () => {
     }
   };
 
-  // Bejelentkezés + Broadcast
+  // Bejelentkezés
   const login = useCallback(async (username, password) => {
     console.log('[AUTH] Logging in...');
 
@@ -165,7 +164,7 @@ export const useAuth = () => {
 
           setUserCurrentStatus(userStatusWRooms);
 
-          // Broadcast LOGIN más tabok felé - MOST MÁR A TOKENNEL
+          // Broadcast LOGIN más tabok felé
           broadcastLogin(response.accessToken);
 
           if (userStatusWRooms.currentRoom?.roomId) {
@@ -186,14 +185,14 @@ export const useAuth = () => {
     }
   }, [post, setToken, setUserCurrentStatus, broadcastLogin]);
 
-  // Kijelentkezés + Broadcast
+  // Kijelentkezés
   const logout = useCallback(async () => {
     console.log('[LOGOUT] Starting logout process...');
 
     try {
       const currentToken = token;
 
-      // State törlése
+
       setToken(null);
       setUserCurrentStatus({
         userInfo: {
@@ -247,7 +246,6 @@ export const useAuth = () => {
     broadcastLogout,
   ]);
 
-  // Automatikus token validáció
   const ensureValidToken = useCallback(async () => {
     const currentToken = token;
 
@@ -273,7 +271,6 @@ export const useAuth = () => {
     return true;
   }, [token, userCurrentStatus.authenticated, isTokenExpiringSoon, refreshToken, getCurrentStatus, setUserCurrentStatus]);
 
-  // Inicializálás
   useEffect(() => {
     const initAuth = async () => {
       setIsLoading(true);
@@ -298,7 +295,6 @@ export const useAuth = () => {
     initAuth();
   }, []);
 
-  // Automatikus token frissítés
   useEffect(() => {
     if (!userCurrentStatus.authenticated || !token) {
       return;
@@ -308,7 +304,7 @@ export const useAuth = () => {
       if (isTokenExpiringSoon(token)) {
         await refreshToken();
       }
-    }, 240000); // 4 percenként
+    }, 240000);
 
     return () => clearInterval(interval);
   }, [userCurrentStatus.authenticated, token, isTokenExpiringSoon, refreshToken]);

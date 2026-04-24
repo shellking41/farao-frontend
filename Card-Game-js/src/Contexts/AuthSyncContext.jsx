@@ -53,7 +53,7 @@ export const AuthSyncProvider = ({ children }) => {
         case 'TOKEN_REFRESH':
           console.log('[AuthSync] Token refresh detected from another tab');
 
-          // Frissítjük a tokent a másik tab-ból kapott értékkel
+          // Frissítjük a tokent a másik tabból kapott értékkel
           if (accessToken) {
             setToken(accessToken);
           }

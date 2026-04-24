@@ -43,7 +43,6 @@
   box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
 }
 
-/* Statisztika táblázat stílusok - sötét háttérhez */
 .userStatisticsContainer {
   min-width: 400px;
   overflow-x: auto;
@@ -55,7 +54,7 @@
   font-family: inherit;
   background-color: rgba(255, 255, 255, 0.05);
 
-  color: #fff; /* fehér szöveg */
+  color: #fff;
 }
 .playerStatHeader {
   color: white;
@@ -67,8 +66,8 @@
   padding: 1rem 0.5rem;
   font-size: 1.2rem;
 
-  color: rgba(255, 255, 255, 0.9); /* áttetsző fehér */
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2); /* világos border */
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 .userStatisticsContainer th:first-child {
   text-align: left;
@@ -76,7 +75,7 @@
 .userStatisticsContainer td {
   padding: 0.8rem 0.5rem;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* halvány border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -86,7 +85,7 @@
 
 .userStatisticsContainer td:first-child {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7); /* halványabb fehér a címkéknek */
+  color: rgba(255, 255, 255, 0.7);
   text-transform: capitalize;
 }
 
@@ -103,19 +102,19 @@
   text-align: center;
 }
 
-/* Hover effekt a sorokra - sötét háttéren */
+
 .userStatisticsContainer tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.05); /* halvány fehér áttetsző */
+  background-color: rgba(255, 255, 255, 0.05);
   transition: background-color 0.2s ease;
 }
 
-/* Fejléc hover kivétele */
+
 .userStatisticsContainer tbody tr:hover td {
   background-color: transparent;
 }
 
 
-/* Reszponzív design */
+
 @media (max-width: 768px) {
   .userStatisticsContainer {
     min-width: 100%;

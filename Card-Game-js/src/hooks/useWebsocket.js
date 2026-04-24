@@ -133,7 +133,6 @@ function useWebsocket() {
   }, [clientRef, connected, token, subscriptionRef]);
 
   useEffect(() => {
-    // Ha kapcsolódva van és nincs hiba, elrejtjük a promptot és töröljük a timert
     if (connected && !hasError) {
       setShowRefreshPrompt(false);
 
@@ -142,14 +141,12 @@ function useWebsocket() {
         disconnectTimerRef.current = null;
       }
 
-      return; // Nem ad vissza cleanup függvényt
+      return;
     }
 
-    // Ha nincs kapcsolat VAGY van hiba
     if (!connected || hasError) {
       console.warn('[STOMP] Kapcsolat megszakadt vagy error történt, prompt időzítő indítása...');
 
-      // 10 másodperc múlva megjelenik a refresh prompt
       disconnectTimerRef.current = setTimeout(() => {
         if (!connected || hasError) {
           console.warn('[STOMP] Kapcsolat nem állt helyre, refresh prompt megjelenítése...');
@@ -157,7 +154,6 @@ function useWebsocket() {
         }
       }, 3000);
 
-      // Cleanup függvény visszaadása
       return () => {
         if (disconnectTimerRef.current) {
           clearTimeout(disconnectTimerRef.current);
@@ -167,7 +163,6 @@ function useWebsocket() {
     }
   }, [connected, hasError]);
 
-  // Refresh függvény
   const handleRefresh = useCallback(() => {
     window.location.reload();
   }, []);

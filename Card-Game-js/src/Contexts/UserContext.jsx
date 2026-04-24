@@ -2,7 +2,6 @@ import React, {createContext, useState} from 'react'
 
 export const UserContext = createContext();
 
-// Provider komponens
 export const UserContextProvider = ({children}) => {
 
     const [userCurrentStatus, setUserCurrentStatus] = useState({

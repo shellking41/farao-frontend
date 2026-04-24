@@ -47,10 +47,10 @@ function useCalculatePlayAnimation(spacing = 40) {
         targetTop = goToRef.top;
       }
 
-      // Mobil kártya méret (kisebb kezdőméret)
+      // Mobil kártya méret
       let mobileCardSize = {
-        width: 40,  // Kisebb szélesség mobilon
-        height: 60,  // Kisebb magasság mobilon
+        width: 40,
+        height: 60,
       };
 
       // Normál kártya méret
@@ -81,7 +81,7 @@ function useCalculatePlayAnimation(spacing = 40) {
 
       }
       const cardsInitPositionStyle = cards.map((card, i) => {
-        // Ha van cardRefs (mobil nézet saját kártyák), használjuk a valós pozíciókat
+        // Ha van cardRefs, használjuk a valós pozíciókat
         if ((isMobile) && cardRefs && cardRefs[card.cardId]) {
           const cardElement = cardRefs[card.cardId];
           const cardIndex = allCardsInHand.findIndex(c => c.cardId === card.cardId);
@@ -94,14 +94,13 @@ function useCalculatePlayAnimation(spacing = 40) {
             console.log(`[MOBILE ANIMATION] Card ${card.cardId} real position:`, (containerRect.left) + cardIndex * 64, (containerRect.left), cardIndex);
 
             return {
-              left: `${(containerRect.left) + cardIndex * 64}px`, // 10px padding + card width + gap
+              left: `${(containerRect.left) + cardIndex * 64}px`,
               top: `${containerRect.top - playgroundRect.top}px`,
               rotate: '0deg',
             };
           }
         }
 
-        // Egyébként használjuk a számított pozíciókat (desktop vagy opponent)
         let cardIndexForLayout;
 
         if (playerPosition === 'bottom' && allCardsInHand) {

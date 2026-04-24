@@ -221,7 +221,6 @@
   margin-bottom: 16px;
 }
 
-/* Optional: Add animation for page transitions */
 .roomsGrid {
   display: flex;
   flex-wrap: wrap;
@@ -242,7 +241,6 @@
   }
 }
 
-/* Improve empty state styling */
 .emptyState {
   text-align: center;
   padding: 4rem 2rem;

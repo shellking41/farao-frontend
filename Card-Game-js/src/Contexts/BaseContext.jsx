@@ -4,7 +4,6 @@ import { Client } from '@stomp/stompjs';
 
 export const BaseContext = createContext();
 
-// Provider komponens
 export const BaseContextProvider = ({ children }) => {
 
   const contextValue={

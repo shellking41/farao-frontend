@@ -4,7 +4,6 @@ import {Client} from '@stomp/stompjs';
 
 export const NotificationContext = createContext();
 
-// Provider komponens
 export const NotificationContextProvider = ({children}) => {
 
     const [notifications, setNotifications] = useState([]);

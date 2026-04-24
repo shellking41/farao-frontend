@@ -12,7 +12,7 @@ function ProtectedRoute({ children }) {
   const [loginError, setLoginError] = useState('');
   const { setErrorLog } = useContext(ErrorContext);
 
-  // Loading állapot
+  // Loading
   if (isLoading) {
     return (
       <Box
@@ -26,7 +26,7 @@ function ProtectedRoute({ children }) {
     );
   }
 
-  // Ha nincs authentikálva, login modal
+  // Ha nincs authentikálva
   if (!isAuthenticated) {
     const inputs = [
       { name: 'Username', type: 'text', minLength: 0 },
@@ -53,7 +53,6 @@ function ProtectedRoute({ children }) {
               setLoginError(result.message || 'Login failed');
             }
             // Ha sikeres, akkor automatikusan bezáródik a modal
-            // mert az isAuthenticated true lesz
           }}
         >
           <div className={styles.registerLinkContainer}>

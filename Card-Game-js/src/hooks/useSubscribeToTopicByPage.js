@@ -116,7 +116,6 @@ const getPageSubscriptions = (getCtx) => {
             return;
           }
 
-          //  ha nincs egyértelmű flag
           showNotification(message.message || 'Unknown response', 'info');
         },
       },
@@ -153,7 +152,6 @@ const getPageSubscriptions = (getCtx) => {
 
           console.log('[JOIN-REQUEST] New request received:', message);
 
-          // Hozzáadjuk a join request-et a listához
           setJoinRequests((prev) => [...prev, message]);
 
           // notification gamemaster-nek
@@ -246,7 +244,6 @@ const getPageSubscriptions = (getCtx) => {
 
           console.log('[JOIN-RESPONSE] Room page:', message);
 
-          // SIKERES KONFIRMÁLÁS
           if (message.confirmed === true) {
             showNotification(message.message, 'success');
             setUserCurrentStatus((prev) => ({
@@ -256,7 +253,6 @@ const getPageSubscriptions = (getCtx) => {
             return;
           }
 
-          //  ELUTASÍTOTT JOIN
           if (message.confirmed === false) {
             showNotification(message.message, 'warning');
             return;
@@ -284,7 +280,6 @@ const getPageSubscriptions = (getCtx) => {
             setCurrentRoundKey,
           } = getCtx();
 
-          // Saját játékos beállítása
           const self = message.players.find(
             (m) => m.userId === userCurrentStatus.userInfo.userId,
           );
@@ -293,16 +288,12 @@ const getPageSubscriptions = (getCtx) => {
             setPlayerSelf(self);
           }
 
-          // Külön szedjük szét az adatokat
           const { validPlays, ...rest } = message;
 
-          //  Növeljük a round key-t
           setCurrentRoundKey(prev => prev + 1);
 
-          // gameSession: minden más adat, kivéve playableCards
           setGameSession(rest);
 
-          // playableCards: külön state-ben
           setValidPlays(validPlays || []);
         },
       },
@@ -345,7 +336,6 @@ const getPageSubscriptions = (getCtx) => {
             }
             : { left: '50%', top: '50%' };
 
-          //RESHUFFLE HANDLING
           const currentDeckSize = gameSession?.deckSize || 0;
           const willReshuffle = message.reshuffled === true;
 
@@ -355,15 +345,13 @@ const getPageSubscriptions = (getCtx) => {
             willReshuffle,
           });
 
-          // Ha reshuffle lesz, először csökkentjük a deckSize-t 0-ra
           if (willReshuffle && currentDeckSize > 0) {
             setGameSession((prev) => ({
               ...prev,
-              deckSize: 0, // Mutatjuk, hogy elfogyott a deck
+              deckSize: 0,
             }));
           }
 
-          // SELF PLAYER DRAW
 
           if (message.playerId === playerSelf?.playerId && message.newCard != null) {
             const currentHandCount = (gameSession?.playerHand?.ownCards ?? []).length;
@@ -450,7 +438,6 @@ const getPageSubscriptions = (getCtx) => {
                   message.deckSize, setDeckRotations,
                 );
               } else {
-                // Normál deckSize frissítés
                 setGameSession((prev) => ({
                   ...prev,
                   deckSize: message.deckSize,
@@ -458,9 +445,8 @@ const getPageSubscriptions = (getCtx) => {
               }
             }, drawTotalDelay);
           }
-          // OPPONENT DRAW
+          // OPPONENT HúZÁS
           else {
-            // ... opponent draw logic
             console.log('[DRAW] Other player drew, starting opponent animation', message);
 
             const drawingPlayer = gameSession?.players?.find(p => p.playerId === message.playerId);
@@ -551,7 +537,6 @@ const getPageSubscriptions = (getCtx) => {
               setAnimatingDrawCards([]);
               console.log('[DRAW ANIMATION] Opponent animation complete');
 
-              //  OPPONENTNÉL IS
               if (willReshuffle) {
                 const cardsToReshuffle = message.deckSize;
 
@@ -564,7 +549,6 @@ const getPageSubscriptions = (getCtx) => {
                   message.deckSize, setDeckRotations,
                 );
               } else {
-                // Normál deckSize frissítés
                 setGameSession((prev) => ({
                   ...prev,
                   deckSize: message.deckSize,
@@ -579,13 +563,11 @@ const getPageSubscriptions = (getCtx) => {
         destination: '/topic/game/' + getCtx().gameSession?.gameSessionId + '/played-cards',
         callback: (message) => {
           const { gameSession, setSkippedPlayers } = getCtx();
-          //ace handling
 
           if (message.newPlayedCards[0].rank === 'ACE') {
             console.log('visual only', message.newPlayedCards[0].rank);
             const skippedVisual = computeSkippedPlayersVisual(message, gameSession);
 
-            // kiírás / debug
             console.log('visual only', skippedVisual);
             setSkippedPlayers(skippedVisual);
 
@@ -599,11 +581,9 @@ const getPageSubscriptions = (getCtx) => {
 
           const { setGameSession, playerSelf } = getCtx();
 
-          // hozzáadjuk a saját kártyáinkat is, DE csak ha még nincs a queue-ban
           setGameSession((prev) => {
             const queue = Array.isArray(prev?.playedCardsQueue) ? prev.playedCardsQueue : [];
 
-            // Ellenőrizzük hogy már van-e ilyen queue item
             const alreadyExists = queue.some(item =>
               item.playerId === message.playerId &&
               Math.abs(item.receivedAt - Date.now()) < 1000,
@@ -704,47 +684,7 @@ const getPageSubscriptions = (getCtx) => {
           }
           setTimeout(() => { window.location.reload();}, 1000);
 
-          // setGameSession({
-          //
-          // });
-          // setValidPlays([]);
-          //
-          // setPlayerSelf({
-          //
-          // });
-          //
-          // setTurn({
-          //
-          // });
-          //
-          // setSelectedCards([]);
-          // setAnimatingCards([])
-          // setAnimatingOwnCards([])
-          // setAnimatingDrawCards([])
-          // setAnimatingReshuffle([])
-          // setGameSession({})
-          // setIsNewRound(false)
-          // setDeckRotations([])
-          //
-          // const userCurrentStatus = getCtx().userCurrentStatus;
-          //
-          // const currentAndManagedRoom = await post(
-          //     'http://localhost:8080/room/current-and-managed-room',
-          //     {
-          //       currentRoomId: userCurrentStatus.currentRoom?.roomId,
-          //       managedRoomId: userCurrentStatus.managedRoom?.roomId,
-          //     },
-          //     token
-          // );
-          //
-          // const userStatusWRooms = {
-          //   userInfo: userCurrentStatus?.userInfo,
-          //   authenticated: userCurrentStatus?.authenticated,
-          //   currentRoom: currentAndManagedRoom?.currentRoom,
-          //   managedRoom: currentAndManagedRoom?.managedRoom,
-          // };
-          //
-          // setUserCurrentStatus(userStatusWRooms);
+
         },
       },
 
@@ -949,7 +889,7 @@ function UseSubscribeToTopicByPage({ page, currentRoomId }) {
 
     const pageSubscriptions = getPageSubscriptions(getCtx);
 
-    //  MINDIG feliratkozunk a global subscriptions-re
+    //  feliratkozunk a global subscriptions-re
     const globalSubs = pageSubscriptions.global || [];
     globalSubs.forEach((sub) => {
       try {
@@ -961,7 +901,7 @@ function UseSubscribeToTopicByPage({ page, currentRoomId }) {
       }
     });
 
-    // Page-specific subscriptions
+    // Page specifikus feliratkozas
     const subscriptionsForPage = pageSubscriptions[page] || [];
     subscriptionsForPage.forEach((sub) => {
       try {

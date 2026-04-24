@@ -6,7 +6,6 @@
     transform: translateY(-20px);
 }
 
-/* Tiltsd le a hover effektet drag közben */
 .dragging .selectable-card:hover {
     transform: none;
 }
@@ -57,7 +56,6 @@
     position: static !important;
 }
 
-/* Scroll styling */
 .mobile-card-hand::-webkit-scrollbar {
     height: 8px;
 }

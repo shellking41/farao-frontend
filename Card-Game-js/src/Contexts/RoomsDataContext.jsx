@@ -4,7 +4,6 @@ import {Client} from '@stomp/stompjs';
 
 export const RoomsDataContext = createContext();
 
-// Provider komponens
 export const RoomsDataContextProvider = ({children}) => {
 
     const [totalPages, setTotalPages] = useState(0);

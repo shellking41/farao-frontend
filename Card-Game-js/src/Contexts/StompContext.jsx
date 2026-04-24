@@ -24,7 +24,6 @@ export const StompContextProvider = ({ children }) => {
   const subscriptionRef = useRef(new Map);
   const clientRef = useRef(null);
 
-  // Token tracking
   const lastTokenRef = useRef(null);
 
   const connectToSocket = () => {
@@ -130,7 +129,6 @@ export const StompContextProvider = ({ children }) => {
     }
   }, [userCurrentStatus.authenticated, token, connected]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       console.log('[STOMP] Component unmounting, cleaning up');

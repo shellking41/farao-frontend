@@ -30,7 +30,6 @@ function Home() {
 
     const handlePageChange = (newPage) => {
         goToPage(newPage);
-        // Scroll to top when changing page
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 

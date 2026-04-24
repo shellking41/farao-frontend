@@ -6,8 +6,6 @@ function NewRoundNotification({ isVisible, onAnimationComplete,lossIncreased, se
     const [shouldRender, setShouldRender] = useState(false);
     const {playerSelf,gameSession}=useContext(GameSessionContext)
 
-
-
     useEffect(() => {
         if (isVisible) {
             setShouldRender(true);

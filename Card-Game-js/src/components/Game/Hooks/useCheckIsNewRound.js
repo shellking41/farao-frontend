@@ -31,8 +31,7 @@ export default function useCheckIsNewRound() {
 
         if (isNewRound) {
             // Várunk, amíg az összes animáció befejeződik
-            // Ez az idő a leghosszabb kártyaletétel animáció ideje + buffer
-            const animationDelay = 1000; // 1 másodperc buffer az animációk befejezéséhez
+            const animationDelay = 1000;
 
             const timer = setTimeout(() => {
                  setShouldShowNotification(true);

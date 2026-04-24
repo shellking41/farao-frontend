@@ -39,8 +39,6 @@ const AnimatingCard = function AnimatingCard({
         transforms.push(`scale(${wp.scale})`);
       }
 
-      // FIX: Használjuk a waypoint saját rotate értékét, ha van
-      // A rotation prop csak reshuffle animációnál van használva
       const rotateValue = rotation || wp.rotate;
       if (rotateValue && rotateValue !== '0deg') {
         transforms.push(`rotate(${rotateValue})`);
@@ -111,7 +109,6 @@ const AnimatingCard = function AnimatingCard({
     initialTransforms.push(`scale(${firstWaypoint.scale})`);
   }
 
-  // FIX: Használjuk a rotation prop-ot vagy az első waypoint rotate értékét
   const initialRotate = rotation || firstWaypoint.rotate;
   if (initialRotate && initialRotate !== '0deg') {
     initialTransforms.push(`rotate(${initialRotate})`);

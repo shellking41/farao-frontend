@@ -15,7 +15,7 @@ function UseHandleOpponentsCardPlay(animationLockRef, setGameSession, gameSessio
 
     const next = queue[0];
 
-    // ha mi tettük le, azonnal feldolgozzuk (nem animálunk)
+    // ha mi tettük le
     if (next.playerId === playerSelf.playerId) {
       return;
     }
@@ -28,7 +28,7 @@ function UseHandleOpponentsCardPlay(animationLockRef, setGameSession, gameSessio
 
       return;
     }
-    // LOCK + előkészítés (ugyanaz, mint attemptStartNext)
+
     animationLockRef.current = true;
     animatingQueueItemIdRef.current = next.id;
 
@@ -69,15 +69,13 @@ function UseHandleOpponentsCardPlay(animationLockRef, setGameSession, gameSessio
       isMobile,
     );
 
-    // hozzáfűzzük az új animációs batch-et
     setAnimatingCards(prev => [...prev, ...animations]);
   };
-  // Opponensek kártyaváltozásának figyelése — animáció indítása
+
   useLayoutEffect(() => {
     const q = gameSession?.playedCardsQueue ?? [];
     queueRef.current = q;
 
-    // próbáljuk elindítani rögtön (ha nincs lock)
     if (!animationLockRef.current) {
       attemptStartNextWithQueue(q);
     }

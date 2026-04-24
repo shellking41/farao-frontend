@@ -1,14 +1,13 @@
 import {useEffect, useCallback, useRef} from 'react';
 
 /**
- * Hook to broadcast and listen to play card actions across browser tabs
+ * eza hook broadcastolja a informaciokat a tobbi tabnak
  */
 function useBroadcastPlayAction() {
     const CHANNEL_NAME = 'game-play-action';
     const channelRef = useRef(null);
 
     useEffect(() => {
-        // Create BroadcastChannel for cross-tab communication
         channelRef.current = new BroadcastChannel(CHANNEL_NAME);
 
         return () => {

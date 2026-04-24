@@ -3,7 +3,7 @@ import { NotificationContext } from '../../Contexts/NotificationContext.jsx';
 import { UserContext } from '../../Contexts/UserContext.jsx';
 import { TokenContext } from '../../Contexts/TokenContext.jsx';
 import { useApiCallHook } from '../../hooks/useApiCallHook.js';
-import { FaRobot } from 'react-icons/fa'; // <-- Import React Icon
+import { FaRobot } from 'react-icons/fa';
 import styles from './styles/BotView.module.css';
 
 function BotView({ bot, roomId, difficulties }) {

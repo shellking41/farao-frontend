@@ -5,7 +5,6 @@ import { getPlayerPositionBySeat } from './HungarianCard.jsx';
 function StackOfCardsCounter({ drawn, setDrawn }) {
   const { gameSession, playerSelf } = useContext(GameSessionContext);
 
-  // megjelenített darabok száma, pozício, láthatóság
   const [count, setCount] = useState(0);
   const [position, setPosition] = useState('bottom');
   const [visible, setVisible] = useState(false);
@@ -35,7 +34,6 @@ function StackOfCardsCounter({ drawn, setDrawn }) {
         return;
       }
 
-      // leállítunk esetleges timeoutot, majd eltüntetünk egy rövid delay után
       if (hideTimeoutRef.current) {
         clearTimeout(hideTimeoutRef.current);
       }
@@ -49,7 +47,6 @@ function StackOfCardsCounter({ drawn, setDrawn }) {
     const [playerIdStr, value] = entries[0];
     const drawCount = Number(value) || 0;
 
-    // keressük meg a player objektumot
     const players = gameSession?.players || [];
     const player = players.find(p => String(p.playerId) === String(playerIdStr));
 
@@ -57,7 +54,6 @@ function StackOfCardsCounter({ drawn, setDrawn }) {
     if (player && playerSelf) {
       pos = getPlayerPositionBySeat(player.seat, playerSelf.seat, players.length);
     } else {
-      // ha nincs player adat, fallback bottom
       pos = 'bottom';
     }
 

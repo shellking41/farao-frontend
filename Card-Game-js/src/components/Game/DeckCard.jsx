@@ -7,7 +7,6 @@ function DeckCard({ index, rotation, shouldAnimate = false, isMobile = false, on
   const isAnimatingRef = useRef(false);
   const lastIsMobileRef = useRef(isMobile);
 
-  // Külön useEffect az isMobile változás kezelésére
   useEffect(() => {
     if (lastIsMobileRef.current !== isMobile && hasAnimatedRef.current && cardRef.current) {
       console.log('[DECK CARD] isMobile changed, updating position', { isMobile });
@@ -22,14 +21,13 @@ function DeckCard({ index, rotation, shouldAnimate = false, isMobile = false, on
     }
   }, [isMobile, index]);
 
-  // useLayoutEffect — fut render után, de paint előtt => megszünteti a "flash" race condition-t
   useLayoutEffect(() => {
     // Ha már animál, ne csináljunk semmit
     if (isAnimatingRef.current) {
       return;
     }
 
-    // Ha már animált és nem változott az isMobile, skip
+    // Ha már animált és nem változott az isMobile
     if (hasAnimatedRef.current && lastIsMobileRef.current === isMobile) {
       return;
     }
@@ -40,22 +38,18 @@ function DeckCard({ index, rotation, shouldAnimate = false, isMobile = false, on
 
       const element = cardRef.current;
 
-      // Biztosítsuk, hogy az elem ne villanjon — kezdetben opacity 0 a renderben, itt állítjuk 1-re
       element.style.opacity = '1';
 
-      // Played card pozíció
       const playedCardStart = {
         left: '45%',
         top: '50%',
       };
-
-      // Deck pozíció
+      ó
       const deckPos = {
         left: isMobile ? '45%' : '55%',
         top: isMobile ? `calc(${index * 1.2}px + 30%)` : `calc(${index * 1.2}px + 49%)`,
       };
 
-      // Animáció keyframe-ek
       const keyframes = [
         {
           left: playedCardStart.left,
@@ -87,7 +81,6 @@ function DeckCard({ index, rotation, shouldAnimate = false, isMobile = false, on
     }
   }, [shouldAnimate, index, rotation, isMobile, onAnimationComplete]);
 
-  // Cleanup: ha a komponens unmountol, állítsuk le az animációt
   useEffect(() => {
     return () => {
       if (animationRef.current) {
@@ -108,7 +101,7 @@ function DeckCard({ index, rotation, shouldAnimate = false, isMobile = false, on
     willChange: 'left, top, transform, opacity',
   };
 
-  // Ha kell animálni és még nem animált, render kezdetben legyen rejtett (opacity: 0)
+  // Ha kell animálni és még nem animált, render kezdetben legyen rejtett
   const shouldUseInitialPosition = shouldAnimate && !hasAnimatedRef.current;
 
   const initialStyle = shouldUseInitialPosition ? {

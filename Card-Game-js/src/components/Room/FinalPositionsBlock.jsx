@@ -22,7 +22,6 @@ function FinalPositionsBlock() {
 
   const handleClose = () => setIsVisible(false);
 
-  // Create a sorted array by position
   const sortedPlayers = Object.values(finalPositions).sort(
     (a, b) => a.position - b.position,
   );

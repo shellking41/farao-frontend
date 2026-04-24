@@ -31,16 +31,16 @@ function useCalculateDrawAnimation(spacing = 40) {
     (isTablet, drawnCards, deckPosition, playerHandCount, playerPosition = 'bottom', isSelfPlayer = true, isMobile = false, cardRefs = null) => {
       console.log('isMobile', isMobile);
 
-      // Deck starting position
+
       const deckStart = {
         left: normalizeCoord(deckPosition.left),
         top: normalizeCoord(deckPosition.top),
       };
 
-      // Mobil kártya méret (kisebb kezdőméret)
+      // Mobil kártya méret
       const mobileCardSize = {
-        width: 40,  // Kisebb szélesség mobilon
-        height: 60,  // Kisebb magasság mobilon
+        width: 40,
+        height: 60,
       };
 
       // Normál kártya méret
@@ -53,24 +53,23 @@ function useCalculateDrawAnimation(spacing = 40) {
       const scaleY = mobileCardSize.height / normalCardSize.height; // 60/90 = 0.667
 
       return drawnCards.map((card, index) => {
-        // Calculate the final position in the player's hand
+
         const finalHandCount = playerHandCount + drawnCards.length;
         const cardIndexInHand = playerHandCount + index;
 
         const finalStyle = getCardStyleForPosition(playerPosition, cardIndexInHand, finalHandCount);
 
-        // Get the rotation from the last deck card, fallback to '0deg'
+
         const initialRotate = deckRotations && deckRotations.length > 0
           ? deckRotations[deckRotations.length - (1 + index)]
           : '0deg';
 
-        // Ha mobil és saját játékos (bottom), akkor a toggle button pozíciójához igazítunk
+        // Ha mobil és saját játékos, akkor a toggle button pozíciójához igazítunk
         const shouldScale = (isMobile) && playerPosition !== 'bottom';
         console.log(shouldScale, 'shouldScale', isMobile);
 
         const isMobileSelfPlayer = (isMobile) && playerPosition === 'bottom' && isSelfPlayer;
 
-        // Mobil self player esetén próbáljuk meg a toggle button pozícióját használni
         let mobileTargetPosition;
 
         if (isMobileSelfPlayer) {
@@ -82,7 +81,7 @@ function useCalculateDrawAnimation(spacing = 40) {
 
             if (playgroundRect) {
               mobileTargetPosition = {
-                left: `${(containerRect.left - playgroundRect.left) + 10 + (cardIndexInHand * 64)}px`, // 10px padding + card width + gap
+                left: `${(containerRect.left - playgroundRect.left) + 10 + (cardIndexInHand * 64)}px`,
                 top: `${containerRect.top - playgroundRect.top + 10}px`,
               };
             }
@@ -113,16 +112,16 @@ function useCalculateDrawAnimation(spacing = 40) {
               left: isMobileSelfPlayer ? mobileTargetPosition.left : normalizeCoord(finalStyle.left),
               top: isMobileSelfPlayer ? mobileTargetPosition.top : shouldScale ? `calc(${normalizeCoord(finalStyle.top)} - 20px)` : normalizeCoord(finalStyle.top),
               rotate: isMobileSelfPlayer ? '0deg' : finalStyle.rotate || '0deg',
-              scale: shouldScale ? scaleX : 1, // Kisebb méret mobilon
+              scale: shouldScale ? scaleX : 1,
               transform: isSelfPlayer ? 'rotateY(0deg)' : 'rotateY(180deg)',
-              // Mobil esetén vissza a normál méretre
+
 
               offset: 1,
             },
           ],
           delay: index * 150,
           duration: 800,
-          // Flag hogy mobil scaling szükséges
+
           isMobileScaling: shouldScale,
         };
       });

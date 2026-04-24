@@ -4,7 +4,6 @@ import {Client} from '@stomp/stompjs';
 
 export const TokenContext = createContext();
 
-// Provider komponens
 export const TokenContextProvider = ({children}) => {
     const [token, setToken] = useState("");
     const contextValue = {

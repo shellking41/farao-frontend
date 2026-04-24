@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { GameSessionContext } from "../../Contexts/GameSessionContext.jsx";
 
-// Suit képek mapping
 const SUIT_IMAGES = {
     ACORNS: '/src/assets/ACORN.png',
     BELLS: '/src/assets/BELL.png',
@@ -22,7 +21,6 @@ function SuitChange() {
             setCurrentSuit(changedSuit);
             setVisible(true);
 
-            // 2 másodperc után eltűntetjük
             const timeout = setTimeout(() => {
                  setVisible(false);
             }, 2000);
